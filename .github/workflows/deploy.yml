@@ -175,8 +175,7 @@ jobs:
           subject: "🚨 Falha pipeline Actions"
           to: "fe.dsm.vot.001@gmail.com"
           from: ${{ secrets.EMAIL_USER }}
-          content_type: text/html
-          body: |
+          html_body: |
             <p>A execução falhou.</p>
             <p><b>Repositório:</b> ${{ github.repository }}<br/>
             <b>Commit:</b> ${{ github.sha }}<br/>

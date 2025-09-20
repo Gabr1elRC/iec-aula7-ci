@@ -4,15 +4,12 @@ import js from "@eslint/js";
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
-  // arquivos/paths a ignorar
   {
     ignores: ["node_modules/**", "coverage/**", "dist/**"]
   },
 
-  // regras recomendadas do ESLint
   js.configs.recommended,
 
-  // opções gerais do projeto
   {
     languageOptions: {
       ecmaVersion: "latest",
@@ -24,8 +21,16 @@ export default [
         __dirname: "readonly",
         module: "readonly",
         require: "readonly",
-        // Testes
-        jest: "readonly"
+        // Testes (Jest)
+        jest: "readonly",
+        describe: "readonly",
+        it: "readonly",
+        test: "readonly",
+        expect: "readonly",
+        beforeAll: "readonly",
+        afterAll: "readonly",
+        beforeEach: "readonly",
+        afterEach: "readonly"
       }
     },
     rules: {
@@ -34,7 +39,6 @@ export default [
     }
   },
 
-  // ajustes específicos para testes
   {
     files: ["tests/**/*.test.js"],
     rules: {

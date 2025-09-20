@@ -21,7 +21,7 @@ jobs:
         run: npm install -g semver       
 
       - name: Build
-        run: npm build
+        run: npm run build
 
       - name: Testes
         run: npm test -- --coverage
@@ -166,7 +166,24 @@ jobs:
       # Envio de e-mail EM CASO DE FALHA no pipeline
       - name: Enviar email se falhar
         if: failure()
-        uses: dawidd6/action-send-mail@v3          
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USER }}
+          password: ${{ secrets.EMAIL_PASS }}
+          subject: "🚨 Falha pipeline Actions"
+          to: "fe.dsm.vot.001@gmail.com"
+          from: ${{ secrets.EMAIL_USER }}
+          content_type: text/html
+          body: |
+            <p>A execução falhou.</p>
+            <p><b>Repositório:</b> ${{ github.repository }}<br/>
+            <b>Commit:</b> ${{ github.sha }}<br/>
+            <b>Workflow:</b> ${{ github.workflow }}<br/>
+            <b>Job:</b> ${{ github.job }}</p>
+            <p><a href="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}">Veja os logs</a></p>
+
       # Cadastrar os dados para envio de e-mail e recupera-los aqui 
       # Ex.: SMTP DO SERVIDOR DE E-MAIL / PORTA / USUARIO / SENHA / EMAIL E API/TOKEN PARA ENVIO DE E-MAIL)
       # No gmail há uma configuração para geração de secret para envio de e-mails por aplicativos terceiros
